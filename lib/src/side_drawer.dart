@@ -10,7 +10,6 @@ class FanSideDrawer extends StatelessWidget {
     super.key,
     required this.menuItems,
     required this.selectedIndex,
-    required this.onTap,
     this.drawerItemsWidth = 230,
     this.drawerItemsHeight = 60,
     this.drawerType = DrawerType.pipe,
@@ -22,8 +21,6 @@ class FanSideDrawer extends StatelessWidget {
     this.animationDuration = const Duration(milliseconds: 600),
     this.boxDrawerItemRadius = const BorderRadius.all(Radius.circular(40)),
   });
-
-  final void Function()? onTap;
 
   // Defines default selectedIndex;
   final int selectedIndex;
@@ -81,7 +78,6 @@ class FanSideDrawer extends StatelessWidget {
       padding: drawerPadding,
       child: (drawerType == DrawerType.pipe)
           ? PipeDrawer(
-              onTap: onTap,
               selectedIndex: selectedIndex,
               menuItems: menuItems,
               drawerItemsHeight: drawerItemsHeight,
@@ -93,7 +89,6 @@ class FanSideDrawer extends StatelessWidget {
               menuTextStyle: menuItemTextStyle,
             )
           : BoxDrawer(
-              onTap: onTap,
               selectedIndex: selectedIndex,
               menuItems: menuItems,
               drawerItemsHeight: drawerItemsHeight,

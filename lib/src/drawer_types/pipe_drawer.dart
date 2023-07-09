@@ -5,7 +5,6 @@ import '../model/drawer_menu_item.dart';
 class PipeDrawer extends StatefulWidget {
   const PipeDrawer({
     super.key,
-    required this.onTap,
     required this.selectedIndex,
     required this.menuItems,
     required this.drawerItemsHeight,
@@ -17,7 +16,6 @@ class PipeDrawer extends StatefulWidget {
     required this.menuTextStyle,
   });
 
-  final void Function()? onTap;
   final int selectedIndex;
   final Color selectedColor;
   final Color unSelectedColor;
@@ -63,7 +61,7 @@ class _PipeDrawerState extends State<PipeDrawer> {
                         topRight: Radius.circular(30),
                         bottomRight: Radius.circular(30),
                       ),
-                      onTap: widget.onTap,
+                      onTap: page.onMenuTapped,
                       child: Row(
                         children: [
                           SizedBox(

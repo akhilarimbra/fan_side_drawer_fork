@@ -5,7 +5,6 @@ import '../model/drawer_menu_item.dart';
 class BoxDrawer extends StatefulWidget {
   const BoxDrawer({
     super.key,
-    required this.onTap,
     required this.selectedIndex,
     required this.menuItems,
     required this.drawerItemsHeight,
@@ -18,7 +17,6 @@ class BoxDrawer extends StatefulWidget {
     required this.menuTextStyle,
   });
 
-  final void Function()? onTap;
   final int selectedIndex;
   final Color selectedColor;
   final Color unSelectedColor;
@@ -64,7 +62,7 @@ class _BoxDrawerState extends State<BoxDrawer> {
                             width: widget.drawerItemsWidth,
                             child: InkWell(
                               borderRadius: widget.boxDrawerItemRadius,
-                              onTap: widget.onTap,
+                              onTap: page.onMenuTapped,
                               child: Row(
                                 children: [
                                   SizedBox(

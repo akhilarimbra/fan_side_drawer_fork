@@ -5,7 +5,7 @@ class DrawerMenuItem {
   final IconData? icon;
   final double? iconSize;
   final String title;
-  final Function onMenuTapped;
+  final void Function()? onMenuTapped;
 
   DrawerMenuItem({
     required this.title,
