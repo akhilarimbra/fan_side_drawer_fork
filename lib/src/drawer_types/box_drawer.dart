@@ -5,6 +5,8 @@ import '../model/drawer_menu_item.dart';
 class BoxDrawer extends StatefulWidget {
   const BoxDrawer({
     super.key,
+    required this.onTap,
+    required this.selectedIndex,
     required this.menuItems,
     required this.drawerItemsHeight,
     required this.drawerItemsWidth,
@@ -16,6 +18,8 @@ class BoxDrawer extends StatefulWidget {
     required this.menuTextStyle,
   });
 
+  final void Function()? onTap;
+  final int selectedIndex;
   final Color selectedColor;
   final Color unSelectedColor;
   final Color selectedItemBackgroundColor;
@@ -31,8 +35,6 @@ class BoxDrawer extends StatefulWidget {
 }
 
 class _BoxDrawerState extends State<BoxDrawer> {
-  late int selectedPageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -43,7 +45,7 @@ class _BoxDrawerState extends State<BoxDrawer> {
             children: [
               AnimatedPositioned(
                 duration: widget.animationDuration,
-                top: widget.drawerItemsHeight * selectedPageIndex,
+                top: widget.drawerItemsHeight * widget.selectedIndex,
                 child: Container(
                   height: widget.drawerItemsHeight,
                   width: widget.drawerItemsWidth,
@@ -62,11 +64,7 @@ class _BoxDrawerState extends State<BoxDrawer> {
                             width: widget.drawerItemsWidth,
                             child: InkWell(
                               borderRadius: widget.boxDrawerItemRadius,
-                              onTap: () {
-                                setState(() {
-                                  selectedPageIndex = i;
-                                });
-                              },
+                              onTap: widget.onTap,
                               child: Row(
                                 children: [
                                   SizedBox(
@@ -77,13 +75,13 @@ class _BoxDrawerState extends State<BoxDrawer> {
                                     (_, var icon?) => Icon(
                                         icon,
                                         size: page.iconSize,
-                                        color: selectedPageIndex == i
+                                        color: widget.selectedIndex == i
                                             ? widget.selectedColor
                                             : widget.unSelectedColor,
                                       ),
                                     _ => Icon(
                                         Icons.info_outline_rounded,
-                                        color: selectedPageIndex == i
+                                        color: widget.selectedIndex == i
                                             ? widget.selectedColor
                                             : widget.unSelectedColor,
                                       )
@@ -95,8 +93,10 @@ class _BoxDrawerState extends State<BoxDrawer> {
                                       child: Text(
                                     page.title,
                                     style: widget.menuTextStyle.copyWith(
-                                      fontWeight: selectedPageIndex == i ? FontWeight.bold : null,
-                                      color: selectedPageIndex == i
+                                      fontWeight: widget.selectedIndex == i
+                                          ? FontWeight.bold
+                                          : null,
+                                      color: widget.selectedIndex == i
                                           ? widget.selectedColor
                                           : widget.unSelectedColor,
                                     ),

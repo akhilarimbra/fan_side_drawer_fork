@@ -9,6 +9,8 @@ class FanSideDrawer extends StatelessWidget {
   const FanSideDrawer({
     super.key,
     required this.menuItems,
+    required this.selectedIndex,
+    required this.onTap,
     this.drawerItemsWidth = 230,
     this.drawerItemsHeight = 60,
     this.drawerType = DrawerType.pipe,
@@ -20,6 +22,11 @@ class FanSideDrawer extends StatelessWidget {
     this.animationDuration = const Duration(milliseconds: 600),
     this.boxDrawerItemRadius = const BorderRadius.all(Radius.circular(40)),
   });
+
+  final void Function()? onTap;
+
+  // Defines default selectedIndex;
+  final int selectedIndex;
 
   /// Defines duration value for all animations used.
   /// Defaults to Duration(milliseconds: 600).
@@ -69,30 +76,35 @@ class FanSideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: drawerItemsWidth * 1.1,
-        height: double.infinity,
-        padding: drawerPadding,
-        child: (drawerType == DrawerType.pipe)
-            ? PipeDrawer(
-                menuItems: menuItems,
-                drawerItemsHeight: drawerItemsHeight,
-                drawerItemsWidth: drawerItemsWidth,
-                selectedColor: selectedColor,
-                unSelectedColor: unSelectedColor,
-                selectedItemBackgroundColor: selectedItemBackgroundColor,
-                animationDuration: animationDuration,
-                menuTextStyle: menuItemTextStyle,
-              )
-            : BoxDrawer(
-                menuItems: menuItems,
-                drawerItemsHeight: drawerItemsHeight,
-                drawerItemsWidth: drawerItemsWidth,
-                selectedColor: selectedColor,
-                unSelectedColor: unSelectedColor,
-                selectedItemBackgroundColor: selectedItemBackgroundColor,
-                animationDuration: animationDuration,
-                boxDrawerItemRadius: boxDrawerItemRadius,
-                menuTextStyle: menuItemTextStyle,
-              ));
+      width: drawerItemsWidth * 1.1,
+      height: double.infinity,
+      padding: drawerPadding,
+      child: (drawerType == DrawerType.pipe)
+          ? PipeDrawer(
+              onTap: onTap,
+              selectedIndex: selectedIndex,
+              menuItems: menuItems,
+              drawerItemsHeight: drawerItemsHeight,
+              drawerItemsWidth: drawerItemsWidth,
+              selectedColor: selectedColor,
+              unSelectedColor: unSelectedColor,
+              selectedItemBackgroundColor: selectedItemBackgroundColor,
+              animationDuration: animationDuration,
+              menuTextStyle: menuItemTextStyle,
+            )
+          : BoxDrawer(
+              onTap: onTap,
+              selectedIndex: selectedIndex,
+              menuItems: menuItems,
+              drawerItemsHeight: drawerItemsHeight,
+              drawerItemsWidth: drawerItemsWidth,
+              selectedColor: selectedColor,
+              unSelectedColor: unSelectedColor,
+              selectedItemBackgroundColor: selectedItemBackgroundColor,
+              animationDuration: animationDuration,
+              boxDrawerItemRadius: boxDrawerItemRadius,
+              menuTextStyle: menuItemTextStyle,
+            ),
+    );
   }
 }

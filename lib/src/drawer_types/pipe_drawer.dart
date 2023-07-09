@@ -5,6 +5,8 @@ import '../model/drawer_menu_item.dart';
 class PipeDrawer extends StatefulWidget {
   const PipeDrawer({
     super.key,
+    required this.onTap,
+    required this.selectedIndex,
     required this.menuItems,
     required this.drawerItemsHeight,
     required this.drawerItemsWidth,
@@ -15,6 +17,8 @@ class PipeDrawer extends StatefulWidget {
     required this.menuTextStyle,
   });
 
+  final void Function()? onTap;
+  final int selectedIndex;
   final Color selectedColor;
   final Color unSelectedColor;
   final Color selectedItemBackgroundColor;
@@ -29,8 +33,6 @@ class PipeDrawer extends StatefulWidget {
 }
 
 class _PipeDrawerState extends State<PipeDrawer> {
-  late int selectedPageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -43,7 +45,9 @@ class _PipeDrawerState extends State<PipeDrawer> {
                   AnimatedContainer(
                     duration: widget.animationDuration,
                     height: widget.drawerItemsHeight,
-                    width: (i == selectedPageIndex) ? widget.drawerItemsWidth : 0,
+                    width: (i == widget.selectedIndex)
+                        ? widget.drawerItemsWidth
+                        : 0,
                     decoration: BoxDecoration(
                         color: widget.selectedItemBackgroundColor,
                         borderRadius: const BorderRadius.only(
@@ -59,11 +63,7 @@ class _PipeDrawerState extends State<PipeDrawer> {
                         topRight: Radius.circular(30),
                         bottomRight: Radius.circular(30),
                       ),
-                      onTap: () {
-                        setState(() {
-                          selectedPageIndex = i;
-                        });
-                      },
+                      onTap: widget.onTap,
                       child: Row(
                         children: [
                           SizedBox(
@@ -74,13 +74,13 @@ class _PipeDrawerState extends State<PipeDrawer> {
                             (_, var icon?) => Icon(
                                 icon,
                                 size: page.iconSize,
-                                color: selectedPageIndex == i
+                                color: widget.selectedIndex == i
                                     ? widget.selectedColor
                                     : widget.unSelectedColor,
                               ),
                             _ => Icon(
                                 Icons.info_outline_rounded,
-                                color: selectedPageIndex == i
+                                color: widget.selectedIndex == i
                                     ? widget.selectedColor
                                     : widget.unSelectedColor,
                               )
@@ -92,8 +92,10 @@ class _PipeDrawerState extends State<PipeDrawer> {
                               child: Text(
                             page.title,
                             style: widget.menuTextStyle.copyWith(
-                              fontWeight: selectedPageIndex == i ? FontWeight.bold : null,
-                              color: selectedPageIndex == i
+                              fontWeight: widget.selectedIndex == i
+                                  ? FontWeight.bold
+                                  : null,
+                              color: widget.selectedIndex == i
                                   ? widget.selectedColor
                                   : widget.unSelectedColor,
                             ),
