@@ -68,33 +68,37 @@ class _BoxDrawerState extends State<BoxDrawer> {
                                   SizedBox(
                                     width: widget.drawerItemsWidth * .2,
                                   ),
-                                  Icon(
-                                    page.icon,
-                                    size: page.iconSize,
-                                    color: widget.selectedIndex == i
-                                        ? widget.selectedColor
-                                        : widget.unSelectedColor,
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      page.title,
-                                      style: widget.menuTextStyle.copyWith(
-                                        fontWeight: widget.selectedIndex == i
-                                            ? FontWeight.bold
-                                            : null,
+                                  switch ((page.prefixWidget, page.icon)) {
+                                    (var prefWidget?, _) => prefWidget,
+                                    (_, var icon?) => Icon(
+                                        icon,
+                                        size: page.iconSize,
                                         color: widget.selectedIndex == i
                                             ? widget.selectedColor
                                             : widget.unSelectedColor,
                                       ),
-                                    ),
-                                  ),
+                                    _ => Icon(
+                                        Icons.info_outline_rounded,
+                                        color: widget.selectedIndex == i
+                                            ? widget.selectedColor
+                                            : widget.unSelectedColor,
+                                      )
+                                  },
                                   const SizedBox(
                                     width: 16,
                                   ),
-                                  page.prefixWidget ?? Container(),
+                                  Expanded(
+                                      child: Text(
+                                    page.title,
+                                    style: widget.menuTextStyle.copyWith(
+                                      fontWeight: widget.selectedIndex == i
+                                          ? FontWeight.bold
+                                          : null,
+                                      color: widget.selectedIndex == i
+                                          ? widget.selectedColor
+                                          : widget.unSelectedColor,
+                                    ),
+                                  )),
                                 ],
                               ),
                             ),
